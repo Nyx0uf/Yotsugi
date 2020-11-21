@@ -1,0 +1,17 @@
+<html>
+    <head>
+        <title>Yotsugi</title>
+    </head>
+    <body>
+        {% if count > 1 %}
+        <h1>{{ count }} Notes</h1>
+        {% else %}
+        <h1>{{ count }} Note</h1>
+        {% endif %}
+        <div>
+            {% for note in notes %}
+            <p>- <a href="/app/note/{{ note.id }}" title="{{ note.title }}">{{ note.title }}</a></p>
+            {% endfor %}
+        </div>
+    </body>
+</html>
