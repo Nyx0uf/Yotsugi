@@ -1,0 +1,11 @@
+[Unit]
+Description="Yotsugi"
+After=network.target
+
+[Service]
+User=__USER__
+ExecStart=/PATH/TO/yotsugi_server.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

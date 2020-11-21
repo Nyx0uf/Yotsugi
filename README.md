@@ -2,7 +2,7 @@
 
 **Yotsugi** is a very simple notes manager written in Python 3. It comes with a RESTful API, a CLI and readonly web pages to render notes.
 
-## Server configuration
+## Server
 
 First install **Flask** package.
 
@@ -10,11 +10,15 @@ First install **Flask** package.
 pip3 install Flask
 ```
 
-then just run `yotsugi_server.py`.
+Then run `yotsugi_server.py`.
 
 You can check if it's working correctly by going to `http://localhost:9950`
 
-## Client configuration
+### systemd
+
+If running Linux you can create a **systemd** service, use the *yotsugi.systemd.service* template file and edit the `User` and `ExecStart` values.
+
+## Client
 
 First install the **requests** package.
 
