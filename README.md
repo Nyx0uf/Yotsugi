@@ -32,7 +32,11 @@ Next create a configuration file named `~/yotsugi/yotsugi.conf` with the followi
 [SERVER]
 url = http://SERVER_IP
 port = SERVER_PORT
+basic_auth_user = user
+basic_auth_password = password
 ```
+
+**basic_auth_user** and **basic_auth_password** are optional and need to be set only if you set Basic Authentication on your server.
 
 then run `yotsugi_cli.py -h` to see available options.
 
