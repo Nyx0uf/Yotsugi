@@ -31,7 +31,8 @@ def index():
     """List notes on the homepage"""
     db = get_db()
     notes = db.get_notes()
-    return render_template('index.html', title='Home', count=len(notes), notes=notes)
+    s = sorted(notes, key=lambda x: x.title, reverse=False)
+    return render_template('index.html', title='Home', count=len(notes), notes=s)
 
 @app.route('/app/note/<note_id>', methods=['GET'])
 def app_get_note(note_id: int):
