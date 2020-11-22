@@ -1,11 +1,23 @@
 <html>
-    <head>
-        <title>Yotsugi — {{ note.title }}</title>
-    </head>
-    <body>
+  <head>
+    <title>Yotsugi — {{ note.title }}</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles/screen.css')}}"
+      media="screen"
+    />
+  </head>
+  <body>
+    <div id="container">
+      <div id="content">
         <h1>{{ note.title }}</h1>
-        <div>
-            <p>{{ note.content }}</p>
+        <p class="note">{{ note.content }}</p>
+        <div id="back">
+            <a href="/" title="Back">Back</a>
         </div>
-    </body>
+      </div>
+    </div>
+  </body>
 </html>

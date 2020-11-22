@@ -1,17 +1,34 @@
 <html>
-    <head>
-        <title>Yotsugi</title>
-    </head>
-    <body>
-        {% if count > 1 %}
-        <h1>{{ count }} Notes</h1>
-        {% else %}
+  <head>
+    <title>Yotsugi</title>
+    <meta charset="UTF-8" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='styles/screen.css')}}"
+      media="screen"
+    />
+  </head>
+  <body>
+    <div id="container">
+      <div id="content">
+        {% if count == 1 %}
         <h1>{{ count }} Note</h1>
+        {% else %}
+        <h1>{{ count }} Notes</h1>
         {% endif %}
-        <div>
-            {% for note in notes %}
-            <p>- <a href="/app/note/{{ note.id }}" title="{{ note.title }}">{{ note.title }}</a></p>
-            {% endfor %}
+
+        <div id="notes">
+          {% for note in notes %}
+          <p class="note">
+            —
+            <a href="/app/note/{{ note.id }}" title="{{ note.title }}"
+              >{{ note.title }}</a
+            >
+          </p>
+          {% endfor %}
         </div>
-    </body>
+      </div>
+    </div>
+  </body>
 </html>

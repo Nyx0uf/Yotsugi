@@ -1,0 +1,70 @@
+html {
+  font: 400 14px Courier, sans-serif;
+  text-align: left;
+  -webkit-text-size-adjust: 100%;
+  letter-spacing: -2px;
+}
+
+body {
+  background: #000;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  word-wrap: break-word;
+  -webkit-hyphens: auto;
+  -moz-hyphens: auto;
+  -ms-hyphens: auto;
+  hyphens: auto;
+}
+
+#content {
+  margin: 0 auto;
+  width: 720px;
+  background: #111;
+  border: solid;
+  border-color: #333;
+  border-radius: 10px;
+  border-width: 2px;
+}
+
+#content h1 {
+  margin: 4 0;
+  text-align: center;
+  color: #FFF;
+  font-size: 40px;
+}
+
+#notes {
+  margin: 10px;
+}
+
+.note {
+  margin: 4px;
+  color: #AAA;
+  font-size: 20px;
+}
+
+.note a {
+  text-decoration: none;
+  color: #AAA;
+}
+
+.note a:hover {
+  color: #FFF;
+}
+
+#back {
+  margin: 4px;
+  text-align: center;
+  font-size: 16px;
+  color: #AAA;
+}
+
+#back a {
+  text-decoration: none;
+  color: #AAA;
+}
+
+#back a:hover {
+  color: #FFF;
+}
