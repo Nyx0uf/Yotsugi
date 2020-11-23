@@ -6,12 +6,14 @@ Client
 """
 
 import argparse
-import requests
 import sys
 from configparser import ConfigParser
 from pathlib import Path
 from typing import List, Dict
+
+import requests
 from requests.models import HTTPBasicAuth
+
 from model import note
 
 def load_cfg() -> ConfigParser:

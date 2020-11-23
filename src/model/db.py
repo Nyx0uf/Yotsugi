@@ -8,6 +8,7 @@ Notes database
 import sqlite3
 import time
 from typing import List
+
 from model import note
 
 class Database:

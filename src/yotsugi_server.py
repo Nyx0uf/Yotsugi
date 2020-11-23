@@ -5,9 +5,11 @@
 Server
 """
 
-import flask
 from pathlib import Path
+
+import flask
 from flask import request, jsonify, render_template
+
 from model import db
 
 app = flask.Flask(__name__)
