@@ -21,18 +21,21 @@ def load_cfg() -> ConfigParser:
     cfg_path = Path.home().joinpath(".yotsugi").joinpath("yotsugi.conf")
     cfg = ConfigParser()
     cfg.read(cfg_path)
-    return cfg["SERVER"]
+    return cfg
 
-def has_auth_infos(cfg: ConfigParser) -> bool:
-    """Check if http basic auth infos are provided"""
-    user = cfg["basic_auth_user"]
-    password = cfg["basic_auth_password"]
-    return user and len(user) > 0 and password and len(password) > 0
+def get_auth(cfg: ConfigParser) -> HTTPBasicAuth:
+    """Returns basic auth info or `None`"""
+    def has_auth_infos(cfg: ConfigParser) -> bool:
+        """Check if http basic auth infos are provided"""
+        return cfg.has_option("SERVER", "basic_auth_user") and cfg.has_option("SERVER", "basic_auth_password")
+    return HTTPBasicAuth(cfg.get("SERVER", "basic_auth_user"), cfg.get("SERVER", "basic_auth_password")) if has_auth_infos(cfg) is True else None
+
+def get_url(cfg: ConfigParser) -> str:
+    return f"{cfg.get('SERVER', 'url')}:{cfg.get('SERVER', 'port')}"
 
 def list_notes(cfg: ConfigParser):
     """List all notes"""
-    auth = HTTPBasicAuth(cfg["basic_auth_user"], cfg["basic_auth_password"]) if has_auth_infos(cfg) is True else None
-    response = requests.get(f"{cfg['url']}:{cfg['port']}/api/notes", auth=auth)
+    response = requests.get(f"{get_url(cfg)}/api/notes", auth=get_auth(cfg))
     if response.status_code == 200:
         notes: List[Dict] = response.json()
         print(f"{len(notes)} Note{'' if len(notes) == 1 else 's'} :")
@@ -42,8 +45,7 @@ def list_notes(cfg: ConfigParser):
 
 def show_note(cfg: ConfigParser, note_id: int):
     """Show the note `note_id`"""
-    auth = HTTPBasicAuth(cfg["basic_auth_user"], cfg["basic_auth_password"]) if has_auth_infos(cfg) is True else None
-    response = requests.get(f"{cfg['url']}:{cfg['port']}/api/notes/{note_id}", auth=auth)
+    response = requests.get(f"{get_url(cfg)}/api/notes/{note_id}", auth=get_auth(cfg))
     if response.status_code == 200:
         tmp = response.json()
         n = note.Note(tmp["id"], tmp["title"], tmp["content"], tmp["creation_date"], tmp["update_date"])
@@ -52,8 +54,7 @@ def show_note(cfg: ConfigParser, note_id: int):
 
 def create_note(cfg: ConfigParser, title: str, body: str):
     """Create a new note with a title and body"""
-    auth = HTTPBasicAuth(cfg["basic_auth_user"], cfg["basic_auth_password"]) if has_auth_infos(cfg) is True else None
-    response = requests.post(f"{cfg['url']}:{cfg['port']}/api/notes/add", data={"title": title, "content": body}, auth=auth)
+    response = requests.post(f"{get_url(cfg)}/api/notes/add", data={"title": title, "content": body}, auth=get_auth(cfg))
     if response.status_code == 200:
         print(f"[+] Note created")
     else:
@@ -61,8 +62,7 @@ def create_note(cfg: ConfigParser, title: str, body: str):
 
 def delete_note(cfg: ConfigParser, note_id: int):
     """Delete the note `note_id`"""
-    auth = HTTPBasicAuth(cfg["basic_auth_user"], cfg["basic_auth_password"]) if has_auth_infos(cfg) is True else None
-    response = requests.delete(f"{cfg['url']}:{cfg['port']}/api/notes/delete/{note_id}", auth=auth)
+    response = requests.delete(f"{get_url(cfg)}/api/notes/delete/{note_id}", auth=get_auth(cfg))
     if response.status_code == 200:
         print(f"[+] Note {note_id} deleted")
     else:
@@ -70,8 +70,7 @@ def delete_note(cfg: ConfigParser, note_id: int):
 
 def update_note(cfg: ConfigParser, note_id: int, title: str, body: str):
     """Update the note `note_id`"""
-    auth = HTTPBasicAuth(cfg["basic_auth_user"], cfg["basic_auth_password"]) if has_auth_infos(cfg) is True else None
-    response = requests.put(f"{cfg['url']}:{cfg['port']}/api/notes/update/{note_id}", data={"title": title, "content": body}, auth=auth)
+    response = requests.put(f"{get_url(cfg)}/api/notes/update/{note_id}", data={"title": title, "content": body}, auth=get_auth(cfg))
     if response.status_code == 200:
         print(f"[+] Note {note_id} updated")
     else:
